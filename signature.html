@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+<style>
+
+img {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.wrapper{width:250px; height:250px;}
+.signature-pad {
+  /* position: absolute;
+  left: 0;
+  top: 0; */
+  width:200px;
+  height:70px;
+}
+</style>
+</head>
+
+<body>
+<h1>
+  Draw over image
+</h1>
+<div class="wrapper">
+<!--   <img src="https://preview.ibb.co/jnW4Qz/Grumpy_Cat_920x584.jpg" width=400 height=200 /> -->
+  <canvas id="signature-pad" class="signature-pad" width=200 height=70></canvas>
+</div>
+
+<div style="margin-top:100px;">
+  <button id="save">Save</button>
+  <button id="clear">Clear</button>
+   <button id="clone" onclick="cloneCanvas('signature-pad')">Clone</button>
+</div>
+
+<div id="copycat">here<canvas id="display" width=400 height=200></canvas></div>
+</body>
+
+<script>
+var signaturePad = new SignaturePad(document.getElementById('signature-pad'), {
+  backgroundColor: 'rgba(255, 255, 255, 0)',
+  penColor: 'rgb(0, 0, 0)'
+});
+var saveButton = document.getElementById('save');
+var cancelButton = document.getElementById('clear');
+
+saveButton.addEventListener('click', function(event) {
+  var data = signaturePad.toDataURL('image/png');
+
+  // Send data to server instead...
+  window.open(data);
+});
+
+cancelButton.addEventListener('click', function(event) {
+  signaturePad.clear();
+});
+
+function cloneCanvas() {
+var destCtx = display.getContext('2d');
+var sigpad=document.getElementById('signature-pad');
+
+//call its drawImage() function passing it the source canvas directly
+destCtx.drawImage(sigpad, 0, 0);
+}
+
+</script>
+</html>
